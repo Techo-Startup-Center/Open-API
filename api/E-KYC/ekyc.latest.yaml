@@ -1,6 +1,6 @@
 openapi: 3.1.0
 x-stoplight:
-  id: a45b938045e8a
+  id: 8vyclckv3965b
 info:
   title: CamDigiKey KYC Verification API
   version: 2.1.0
@@ -69,7 +69,8 @@ info:
     url: 'https://spdx.org/licenses/MIT'
   termsOfService: 'https://www.camdx.gov.kh/terms.html'
   summary: CamDigiKey KYC Verification API
-servers: []
+servers:
+  - url: 'https://security-server.consumer1.com'
 components:
   securitySchemes: {}
   parameters:
@@ -328,12 +329,12 @@ components:
               - $ref: '#/components/schemas/BaseResponse'
               - type: object
                 x-stoplight:
-                  id: s6uow7ki3ycsl
+                  id: 84a842hkronk5
                 properties:
                   data:
                     $ref: '#/components/schemas/PassportOCR'
                     x-stoplight:
-                      id: cs8uvkmmxnt6w
+                      id: j4qs0i8qjybwg
   schemas:
     BaseResponse:
       type: object
@@ -353,11 +354,11 @@ components:
       description: ''
       examples: []
       x-stoplight:
-        id: mg7p2wok24vpb
+        id: m7qynhfusp2ae
     BaseScoringResult:
       title: Response - Scoring Result
       x-stoplight:
-        id: 5rw99b3fxut02
+        id: whw2xj3ww9dkz
       type: object
       properties:
         idNumber:
@@ -374,7 +375,7 @@ components:
     UserInfoResponse:
       title: Response - User Info
       x-stoplight:
-        id: 6bsilzsi4x3lh
+        id: a4bcfqsy8utdj
       type: object
       examples: []
       description: User Information
@@ -424,7 +425,7 @@ components:
     UserInfo:
       title: User Info
       x-stoplight:
-        id: 7za0h9rpoddqg
+        id: eeoz6x4yknnpv
       type: object
       properties:
         idNumber:
@@ -478,7 +479,7 @@ components:
     UserInfoFace:
       title: User Info and User Face
       x-stoplight:
-        id: p411fvfq6o291
+        id: 47gzac0r8iae9
       type: object
       examples:
         - userInfo:
@@ -501,7 +502,7 @@ components:
     UserInfoFaceIdCard:
       title: 'User Info, ID Card and User Face'
       x-stoplight:
-        id: qvcicnlm8l5vv
+        id: 4geuwsiuky8hu
       type: object
       examples:
         - userInfo:
@@ -528,7 +529,7 @@ components:
     UserInfoIdCardLiveness:
       title: 'User Info, ID Card Image and Liveness'
       x-stoplight:
-        id: 31vvqo3ywy1cv
+        id: huswj9jzvltfn
       type: object
       examples:
         - actions:
@@ -590,7 +591,7 @@ components:
           firstNameEn: first_name
           lastNameEn: last_name
       x-stoplight:
-        id: e8ueclw0a97aq
+        id: 79mc87pkbwfop
 paths:
   '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/info-v2.1':
     post:
@@ -637,8 +638,6 @@ paths:
           $ref: '#/components/responses/error500'
         '502':
           $ref: '#/components/responses/error502'
-      tags:
-        - KYC Verification API
     parameters:
       - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/info-face-v2.1':
@@ -662,8 +661,6 @@ paths:
         **Version**: `2.1.0`
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
-      tags:
-        - KYC Verification API
       requestBody:
         content:
           application/json:
@@ -728,8 +725,6 @@ paths:
         **Version**: `2.1.0`
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
-      tags:
-        - KYC Verification API
     parameters:
       - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/info-idcard-liveness-v2.1':
@@ -760,8 +755,6 @@ paths:
       operationId: verifyInfoIdcardLiveness
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
-      tags:
-        - KYC Verification API
     parameters:
       - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/ocr-idcard-v2.1':
@@ -801,8 +794,6 @@ paths:
         **Version**: `2.1.0`
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
-      tags:
-        - KYC Verification API
     parameters:
       - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/ocr-passport-v2.1':
@@ -842,8 +833,6 @@ paths:
         **Version**: `2.1.0`
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
-      tags:
-        - KYC Verification API
     parameters:
       - name: member_code
         in: path
@@ -856,5 +845,3 @@ paths:
           CamDigiKey''s Member:
           * **DEVELOPMENT**: `CAMDX-20201222`
           * **PRODUCTION**: `CAMDX-000003`
-tags:
-  - name: KYC Verification API

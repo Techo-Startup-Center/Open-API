@@ -69,7 +69,8 @@ info:
     url: 'https://spdx.org/licenses/MIT'
   termsOfService: 'https://www.camdx.gov.kh/terms.html'
   summary: CamDigiKey KYC Verification API
-servers: []
+servers:
+  - url: 'https://security-server.consumer1.com'
 components:
   securitySchemes: {}
   parameters:
@@ -637,8 +638,6 @@ paths:
           $ref: '#/components/responses/error500'
         '502':
           $ref: '#/components/responses/error502'
-      tags:
-        - KYC Verification API
     parameters:
       - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/info-face-v2.1':
@@ -662,8 +661,6 @@ paths:
         **Version**: `2.1.0`
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
-      tags:
-        - KYC Verification API
       requestBody:
         content:
           application/json:
@@ -728,8 +725,6 @@ paths:
         **Version**: `2.1.0`
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
-      tags:
-        - KYC Verification API
     parameters:
       - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/info-idcard-liveness-v2.1':
@@ -760,8 +755,6 @@ paths:
       operationId: verifyInfoIdcardLiveness
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
-      tags:
-        - KYC Verification API
     parameters:
       - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/ocr-idcard-v2.1':
@@ -801,8 +794,6 @@ paths:
         **Version**: `2.1.0`
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
-      tags:
-        - KYC Verification API
     parameters:
       - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/ocr-passport-v2.1':
@@ -842,8 +833,6 @@ paths:
         **Version**: `2.1.0`
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
-      tags:
-        - KYC Verification API
     parameters:
       - name: member_code
         in: path
@@ -856,5 +845,3 @@ paths:
           CamDigiKey''s Member:
           * **DEVELOPMENT**: `CAMDX-20201222`
           * **PRODUCTION**: `CAMDX-000003`
-tags:
-  - name: KYC Verification API

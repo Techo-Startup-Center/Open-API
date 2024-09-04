@@ -69,7 +69,8 @@ info:
     url: 'https://spdx.org/licenses/MIT'
   termsOfService: 'https://www.camdx.gov.kh/terms.html'
   summary: CamDigiKey Client Open API
-servers: []
+servers:
+  - url: 'https://security-server.consumer1.com'
 components:
   securitySchemes: {}
   parameters:
@@ -590,8 +591,6 @@ paths:
           $ref: '#/components/responses/error500'
         '502':
           $ref: '#/components/responses/error502'
-      tags:
-        - KYC Verification API
     parameters:
       - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/info-face':
@@ -615,8 +614,6 @@ paths:
         **Version**: `2.0.0`
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
-      tags:
-        - KYC Verification API
       requestBody:
         content:
           application/json:
@@ -681,8 +678,6 @@ paths:
         **Version**: `2.0.0`
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
-      tags:
-        - KYC Verification API
     parameters:
       - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/info-idcard-liveness':
@@ -713,8 +708,6 @@ paths:
       operationId: verifyInfoIdcardLiveness
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
-      tags:
-        - KYC Verification API
     parameters:
       - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/ocr-idcard':
@@ -754,9 +747,5 @@ paths:
         **Version**: `2.0.0`
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
-      tags:
-        - KYC Verification API
     parameters:
       - $ref: '#/components/parameters/MemberCode'
-tags:
-  - name: KYC Verification API
