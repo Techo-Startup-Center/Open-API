@@ -1,0 +1,673 @@
+openapi: 3.1.0
+x-stoplight:
+  id: n2o92rpt5jag0
+info:
+  title: CAMDIGIKEY E-KYB OPEN APIS
+  version: 1.0.0
+  description: "## 1. Introduction\n\nE-KYB, or Electronic Know Your Business, is a comprehensive system designed to verify the identity of businesses. It assesses their legitimacy by considering their business activities and legal documentation. E-KYB not only aids in preventing money laundering but also facilitates tax collection processes. \n\nIn the ongoing Online Business Registration project, multiple line ministries have actively participated in Phases 1, 2, and 3. As part of the initial registration process, numerous companies have registered under the Ministry of Commerce (MOC), General Department of Taxation (GDT) and Ministry of Labour and Vocational Training (MLVT). Leveraging the data provided by these ministries, we can effectively verify and validate the information of registered companies. \n\nBuilding on the progress so far, the next steps involve collaborating closely with the line ministry to enhance the verification of company information. Additionally, the line ministry will develop E-KYB verification APIs, which will be instrumental in verifying registered company details, tax registrations and payments, and financial information. These APIs will play an important role in ensuring the accuracy and reliability of the data pertaining to businesses.\n\n## 2. E-KYB API and Base Registry Data(Phase-1)\n\n**Verification APIs:**\n1. Verify basic company information\n2. Verify company directors \n3. Verify enterprise opening announcement\n4. Verify director of enterprise opening announcement \n\n![](https://raw.githubusercontent.com/Techo-Startup-Center/CamDX-Open-API/feature/aos/assets/ekyb-diagram.png)\n\n\n## 2. APIs Environment\n\n**Request Based URL:**\n```\nhttp(s)://{CONSUMER_SS_MEMBER_URL}/r1/CAMBODIA/GOV/{CAMDIGIKEY_MEMBER_CODE}/TSC-EKYB-API\n```\n- `http(s)://{CONSUMER_SS_MEMBER_URL}/r1/` The base URL of the consumer's security server.\n- `CAMBODIA/GOV/{CAMDIGIKEY_MEMBER_CODE}/TSC-EKYB-API` Path containing the provider's API details, including the member code, and specific service.\n\n**Request Header:**\n```\nX-Road-Client: CAMBODIA/GOV/{REQUESTER_SS_MEMBER_CODE}/{REQUESTER_SS_SUBSYSTEM_CODE}\n```\n- `X-Road-Client` The identifier of the consumer, which is recognized and authorized by the provider.\n\n#\n| Environment | CAMDIGIKEY_MEMBER_CODE |\n| ----------- | ---------------------- |\n| **DEVELOPMENT**| CAMDX-20201222 |\n| **PRODUCTION** | CAMDX-000012 |\n\n\n#### Example:\n\nDEVELOPMENT: \n```\nhttp(s)://[ss-dev.consumer1.com.kh]/r1/CAMBODIA/GOV/CAMDX-20201222/TSC-EKYB-API \n```\nPRODUCTION: \n```\nhttp(s)://[ss.consumer1.com.kh]/r1/CAMBODIA/GOV/CAMDX-000012/TSC-EKYB-API\n```\n\n### \U0001F9F0 Code Mapping\n\n<table>\n <tbody><tr>\n  <td>Code Type</td>\n  <td>Code</td>\n  <td>Khmer Definition</td>\n  <td>English Definition</td>\n </tr>\n <tr>\n  <td rowspan=\"7\">Company Types</td>\n  <td>PRIVATE_LIMITED_COMPANY</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ក្រុមហ៊ុនឯកជនទទួលខុសត្រូវមានកម្រិត</span></td>\n  <td>Private Limited Company</td>\n </tr>\n <tr>\n  <td>PUBLIC_LIMITED_COMPANY</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ក្រុមហ៊ុនមហាជនទទួលខុសត្រូវមានកម្រិត</span></td>\n  <td>Public Limited Company</td>\n </tr>\n <tr>\n  <td>REGISTER_BRANCH_OFFICE_OF_FOREIGN_COMPANY</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ចុះបញ្ជីជាសាខាក្រុមហ៊ុននៃក្រុមហ៊ុនបរទេស</span></td>\n  <td>Register Branch Office of Foreign Company</td>\n </tr>\n <tr>\n  <td>REGISTER_COMMERCIAL_REPRESENTATIVE_OFFICE</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ចុះបញ្ជីជាការិយាល័យតំណាង</span></td>\n  <td>Register Commercial Representative Office</td>\n </tr>\n <tr>\n  <td>SOLE_PROPRIETORSHIP</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">សហគ្រាសឯកបុគ្គល</span></td>\n  <td>Sole Proprietorship</td>\n </tr>\n <tr>\n  <td>GENERAL_PARTNERSHIP</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ក្រុមហ៊ុនសហកម្មសិទ្ធិទូទៅ</span></td>\n  <td>General Partnership</td>\n </tr>\n <tr>\n  <td>LIMITED_PARTNERSHIP</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ក្រុមហ៊ុនសហកម្មសិទ្ធិមានកម្រិត</span></td>\n  <td>Limited Partnership</td>\n </tr>\n</tbody></table>\n"
+  contact:
+    name: CamDX Operator
+    email: camdx-info@techostartup.center
+    url: 'https://www.camdx.gov.kh/#contact'
+  license:
+    name: MIT
+    url: 'https://spdx.org/licenses/MIT'
+  termsOfService: 'https://www.camdx.gov.kh/terms.html'
+  summary: CamDigiKey KYC Verification API
+servers: []
+components:
+  securitySchemes: {}
+  parameters:
+    XRoadClient:
+      name: X-Road-Client
+      in: header
+      required: true
+      schema:
+        type: string
+        example: CAMBODIA/GOV/CAMDX-20201234/SUBSYTEM_CODE
+      description: |
+        X-Road-Client Request Header 
+        * Example: `CAMBODIA/GOV/CAMDX-20201234/SUBSYTEM_CODE`
+    MemberCode:
+      name: member_code
+      in: path
+      required: true
+      schema:
+        type: string
+        example: CAMDX-20201222
+        default: CAMDX-20201222
+      description: |
+        CamDigiKey''s Member:
+        * **DEVELOPMENT**: `CAMDX-20201222`
+        * **PRODUCTION**: `CAMDX-000012`
+  responses:
+    companyInfo:
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/Response-Base'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Response-ScoringResult'
+          examples:
+            example-1:
+              value:
+                error: 0
+                message: Successfully
+                data:
+                  idNumber: '012345678'
+                  score: 1
+                  incorrectFields:
+                    - incorrectFieldName
+        application/xml:
+          schema:
+            type: object
+            properties: {}
+    error502:
+      description: Error with status code 502
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: integer
+              message:
+                type: string
+              data:
+                type: 'null'
+            x-examples:
+              example-1:
+                error: 502
+                message: There is problem getting user info from MOI.
+                data: null
+          examples:
+            example-1:
+              value:
+                error: 502
+                message: There is problem getting user info from MOI.
+                data: null
+    error500:
+      description: Error with status code 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: integer
+              message:
+                type: string
+            x-examples:
+              example-1:
+                error: 500
+                message: Request failed with status code 500
+          examples:
+            example-1:
+              value:
+                error: 500
+                message: Request failed with status code 500
+    error400:
+      description: Error with status code 400 Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: integer
+              message:
+                type: string
+              data:
+                type: 'null'
+            x-examples:
+              example-1:
+                error: -1
+                message: |-
+                  JSON parse error: Unrecognized field "issuedDated" (class kh.gov.camdx.camdigikey.openapi.app.dto.UserInfoRequestDto), not marked as ignorable; nested exception is com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException: Unrecognized field "issuedDated" (class kh.gov.camdx.camdigikey.openapi.app.dto.UserInfoRequestDto), not marked as ignorable (9 known properties: "gender", "expiredDate", "idNumber", "dob", "firstNameKh", "issuedDate", "lastNameEn", "lastNameKh", "firstNameEn"])
+                   at [Source: (org.springframework.util.StreamUtils$NonClosingInputStream); line: 1, column: 173] (through reference chain: kh.gov.camdx.camdigikey.openapi.app.dto.UserInfoRequestDto["issuedDated"])
+                data: null
+          examples:
+            example-1:
+              value:
+                error: -1
+                message: Error message from server
+                data: null
+    companyDirectors:
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/Response-Base'
+              - type: object
+                x-stoplight:
+                  id: uvx5be1d4dwxe
+                properties:
+                  company:
+                    $ref: '#/components/schemas/Response-ScoringResult'
+                    x-stoplight:
+                      id: 6ev28y3sbzpr4
+              - type: object
+                x-stoplight:
+                  id: bmr4gkxir5apm
+                properties:
+                  directors:
+                    x-stoplight:
+                      id: 2jzpo6rl56r0i
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Response-Director'
+                      x-stoplight:
+                        id: 3aa860yip2n1y
+    enterprise:
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/Response-Base'
+                x-stoplight:
+                  id: ystn6rnc6et8b
+              - type: object
+                x-stoplight:
+                  id: h0u9xr8qoq5gy
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Response-ScoringResult'
+                    x-stoplight:
+                      id: fxbtqwrww3f6z
+  schemas:
+    Request-CompanyInfo:
+      title: Company Info Request
+      x-stoplight:
+        id: pd93hd35fvcyq
+      type: object
+      description: Company Information
+      properties:
+        single_id:
+          type: string
+          x-stoplight:
+            id: liteicru2sckk
+          description: Single ID
+        tin:
+          type: string
+          x-stoplight:
+            id: 825udun9wl4s1
+          description: Company’s TIN
+        company_name_en:
+          type: string
+          x-stoplight:
+            id: er1w1t4dweot3
+          description: Company name in English
+        company_name_kh:
+          type: string
+          x-stoplight:
+            id: 0n5zfofl3o5i3
+          description: Company name in Khmer
+    Request-Director:
+      title: Director
+      x-stoplight:
+        id: t0rnvgywr1brp
+      type: object
+      properties:
+        identification_number:
+          type: string
+          x-stoplight:
+            id: aovyz31jsal01
+          description: Director’s identification number
+        last_name_kh:
+          type: string
+          x-stoplight:
+            id: z8yer9epczo7s
+          description: Director’s last name in Khmer
+        first_name_kh:
+          type: string
+          x-stoplight:
+            id: sosw68uy35ybm
+          description: Director’s first name in Khmer
+        last_name_en:
+          type: string
+          x-stoplight:
+            id: xtw9utykmo0vi
+          description: Director’s last name in English
+        first_name_en:
+          type: string
+          x-stoplight:
+            id: q1qpm0xd613va
+          description: Director’s first name in English
+        gender:
+          type: string
+          x-stoplight:
+            id: naf74v8fwbxc8
+          description: Director’s gender (F/M)
+          enum:
+            - M
+            - F
+        dob:
+          type: string
+          x-stoplight:
+            id: fol5t71f9xwdj
+          description: Director’s date of birth (yyyy-MM-dd)
+          format: date
+          example: '2000-01-31'
+    Request-CompanyDirectors:
+      title: CompanyDirectors
+      x-stoplight:
+        id: k0cjpmat5vnxr
+      type: object
+      properties:
+        single_id:
+          type: string
+          x-stoplight:
+            id: rr4ecyy7moo6y
+          description: Single ID
+        company_name_en:
+          type: string
+          x-stoplight:
+            id: n7074kioipaz7
+          description: Company’s name in English
+        company_name_kh:
+          type: string
+          x-stoplight:
+            id: 61td6btiggpp9
+          description: 'Company’s name in Khmer '
+        directors:
+          x-stoplight:
+            id: nsrsj0sb487rd
+          type: array
+          items:
+            $ref: '#/components/schemas/Request-Director'
+            x-stoplight:
+              id: mnalel923iqlj
+    Request-Enterprise:
+      title: EnterpriseRequest
+      x-stoplight:
+        id: ptg8twrfkadk7
+      type: object
+      properties:
+        single_id:
+          type: string
+          x-stoplight:
+            id: 2cccficpedgps
+          description: Single ID
+        company_name_en:
+          type: string
+          x-stoplight:
+            id: m4aese3o6qln4
+          description: Company’s name in English
+        company_name_kh:
+          type: string
+          x-stoplight:
+            id: 0idty0uozjri0
+          description: 'Company’s name in Khmer '
+        tin:
+          type: string
+          x-stoplight:
+            id: xjhkoh6w29daf
+          description: Company’s TIN
+        opening_data:
+          type: string
+          x-stoplight:
+            id: dma5e3gjcv2uq
+          example: '2000-01-31'
+          format: date
+          description: Date of opening (YYYY-MM-DD)
+        company_type:
+          type: string
+          x-stoplight:
+            id: sl2qhrrtzi8q3
+          description: |
+            Company types. 
+            See Code Mapping table for more detail
+        main_business_objective_code:
+          type: string
+          x-stoplight:
+            id: cle6mk2vznx9c
+          description: Main business objective code
+        main_business_objective_en:
+          type: string
+          x-stoplight:
+            id: n19iy6mvxssx3
+          description: Main business objective in English
+        main_business_objective_kh:
+          type: string
+          x-stoplight:
+            id: 7ojbsiwqck2v0
+          description: Main business objective in Khmer
+        number_of_employee:
+          type: integer
+          x-stoplight:
+            id: w1d9idfxuwmbb
+          description: Number of employees
+        number_of_women_employee:
+          type: integer
+          x-stoplight:
+            id: t8j825l62z4xs
+          description: Number of women employees
+        number_of_foreigner_employee:
+          type: integer
+          x-stoplight:
+            id: t8j825l62z4xs
+          description: Number of foreigner employees
+        number_of_women_foreigner_employee:
+          type: integer
+          x-stoplight:
+            id: pa32282065zby
+          description: Number of women foreigner employees
+    Request-EnterpriseDirector:
+      title: EnterpriseDirectorRequest
+      x-stoplight:
+        id: g57rqozaihql9
+      type: object
+      properties:
+        single_id:
+          type: string
+          x-stoplight:
+            id: zgrhbpwemi8n7
+          description: Single ID
+        tin:
+          type: string
+          x-stoplight:
+            id: ajac1jfy4l4ck
+          description: Company’s TIN
+        company_name_en:
+          type: string
+          x-stoplight:
+            id: 8ndanhzpe3cn4
+          description: Company’s name in English
+        company_name_kh:
+          type: string
+          x-stoplight:
+            id: 1le51fl8c8qid
+          description: 'Company’s name in Khmer '
+        director_last_name_kh:
+          type: string
+          x-stoplight:
+            id: c7otsaqntx18w
+          description: Director last_name in Khmer
+        director_first_name_kh:
+          type: string
+          x-stoplight:
+            id: wfozqdtyw7pb1
+          description: Director first name in Khmer
+        director_last_name_en:
+          type: string
+          x-stoplight:
+            id: eikvepj0c8gzp
+          description: Director last_name in English
+        director_first_name_en:
+          type: string
+          x-stoplight:
+            id: f9lxc94zn9dos
+          description: Director first name in English
+        director_nationality:
+          type: string
+          x-stoplight:
+            id: 0rbm5vih186wn
+          description: Director nationality (code-2)
+          example: KH
+    Response-Base:
+      type: object
+      x-examples:
+        example-1:
+          error: 0
+          message: string
+      properties:
+        error:
+          type: integer
+        message:
+          type: string
+      required:
+        - error
+        - message
+      title: Response
+      description: ''
+      examples: []
+      x-stoplight:
+        id: 6r65xlhns96pf
+    Response-ScoringResult:
+      title: Response - Scoring Result
+      x-stoplight:
+        id: zdkl1g5j2vrtw
+      type: object
+      examples: []
+      properties:
+        score:
+          type: integer
+          description: '#Range [0,1]'
+        incorrectFields:
+          type: array
+          description: Requested Fields or Empty
+          items:
+            type: string
+    Response-Director:
+      title: DirectorResponse
+      x-stoplight:
+        id: 3j6aq6ry38uhh
+      type: object
+      properties:
+        identification_number:
+          type: string
+          x-stoplight:
+            id: 4juszv0q3wcxj
+          description: Director’s identification number
+        exist:
+          type: boolean
+          x-stoplight:
+            id: jcozgq6xspz50
+          description: If direct identification number exists in the list of directors
+        score:
+          type: integer
+          x-stoplight:
+            id: 150cg0jr85tkn
+          description: 'Director info’s score range [0,1]'
+        incorrectFields:
+          type: array
+          x-stoplight:
+            id: 4qyjs1k3p99r9
+          description: List of director info’s incorrect fields
+          items:
+            x-stoplight:
+              id: jydvp1os1a188
+            type: string
+  requestBodies: {}
+paths:
+  '/r1/CAMBODIA/GOV/{member_code}/TSC-EKYB-API/company-info':
+    post:
+      summary: Verify Basic Company Information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request-CompanyInfo'
+        description: ''
+      operationId: verifyBasicCompanyInfo
+      description: |-
+        Verify Basic Company Information
+
+        **API Code**: `KH.GOV.CAMDX-000012.TSC-EKYB-API.info`
+
+        **Version**: `1.0.0`
+      parameters:
+        - $ref: '#/components/parameters/XRoadClient'
+      responses:
+        '200':
+          $ref: '#/components/responses/companyInfo'
+        '400':
+          $ref: '#/components/responses/error400'
+        '500':
+          $ref: '#/components/responses/error500'
+        '502':
+          $ref: '#/components/responses/error502'
+      tags:
+        - E-KYB Verification API
+    parameters:
+      - name: member_code
+        in: path
+        required: true
+        schema:
+          type: string
+          example: CAMDX-20201222
+          default: CAMDX-20201222
+        description: |
+          CamDigiKey''s Member:
+          * **DEVELOPMENT**: `CAMDX-20201222`
+          * **PRODUCTION**: `CAMDX-000012`
+  '/r1/CAMBODIA/GOV/{member_code}/TSC-EKYB-API/company-directors':
+    post:
+      summary: Verify company directors
+      responses:
+        '200':
+          $ref: '#/components/responses/companyDirectors'
+        '400':
+          $ref: '#/components/responses/error400'
+        '500':
+          $ref: '#/components/responses/error500'
+        '502':
+          $ref: '#/components/responses/error502'
+      operationId: verifyCompanyDirectors
+      description: |-
+        Verify company directors
+
+        **API Code**: `KH.GOV.CAMDX-000012.TSC-EKYB-API.company-directors`
+
+        **Version**: `1.0.0`
+      parameters:
+        - $ref: '#/components/parameters/XRoadClient'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request-CompanyDirectors'
+            examples:
+              example-1:
+                value:
+                  userInfo:
+                    idNumber: '011196245'
+                    firstNameKh: ការឌុល
+                    lastNameKh: អេង
+                    firstNameEn: KADOL
+                    lastNameEn: ENG
+                    gender: M
+                    dob: '2000-05-06'
+                    issuedDate: '2016-03-23'
+                    expiredDate: '2026-03-22'
+                  faceImage: base_64_content
+      tags:
+        - E-KYB Verification API
+    parameters:
+      - name: member_code
+        in: path
+        required: true
+        schema:
+          type: string
+          example: CAMDX-20201222
+          default: CAMDX-20201222
+        description: |
+          CamDigiKey''s Member:
+          * **DEVELOPMENT**: `CAMDX-20201222`
+          * **PRODUCTION**: `CAMDX-000012`
+  '/r1/CAMBODIA/GOV/{member_code}/TSC-EKYB-API/enterprise-opening-announcement':
+    post:
+      summary: Verify enterprise opening announcement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request-Enterprise'
+            examples:
+              example-1:
+                value:
+                  userInfo:
+                    idNumber: '011196245'
+                    firstNameKh: ការឌុល
+                    lastNameKh: អេង
+                    firstNameEn: KADOL
+                    lastNameEn: ENG
+                    gender: M
+                    dob: '2000-05-06'
+                    issuedDate: '2016-03-23'
+                    expiredDate: '2026-03-22'
+                  faceImg: base_64_content
+                  idImage: base_64_content
+        description: ''
+      responses:
+        '200':
+          $ref: '#/components/responses/enterprise'
+        '400':
+          $ref: '#/components/responses/error400'
+        '500':
+          $ref: '#/components/responses/error500'
+        '502':
+          $ref: '#/components/responses/error502'
+      operationId: verifyEnterpriseOpeningAnnouncement
+      description: |-
+        Verify enterprise opening announcement
+
+        **API Code**: `KH.GOV.CAMDX-000012.TSC-EKYB-API.enterprise-opening-announcement`
+
+        **Version**: `1.0.0`
+      parameters:
+        - $ref: '#/components/parameters/XRoadClient'
+      tags:
+        - E-KYB Verification API
+    parameters:
+      - name: member_code
+        in: path
+        required: true
+        schema:
+          type: string
+          example: CAMDX-20201222
+          default: CAMDX-20201222
+        description: |
+          CamDigiKey''s Member:
+          * **DEVELOPMENT**: `CAMDX-20201222`
+          * **PRODUCTION**: `CAMDX-000012`
+  '/r1/CAMBODIA/GOV/{member_code}/TSC-EKYB-API/enterprise-opening-announcement-director':
+    post:
+      summary: Verify director of enterprise opening announcement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request-EnterpriseDirector'
+        description: ''
+      responses:
+        '200':
+          $ref: '#/components/responses/enterprise'
+        '400':
+          $ref: '#/components/responses/error400'
+        '500':
+          $ref: '#/components/responses/error500'
+        '502':
+          $ref: '#/components/responses/error502'
+      description: |-
+        Verify director of enterprise opening announcement
+
+
+        **API Code**: `KH.GOV.CAMDX-000012.TSC-EKYB-API.enterprise-opening-announcement-director`
+
+        **Version**: `1.0.0`
+      operationId: verifyDirectorOfEnterpriseOpeningAnnouncement
+      parameters:
+        - $ref: '#/components/parameters/XRoadClient'
+      tags:
+        - E-KYB Verification API
+    parameters:
+      - name: member_code
+        in: path
+        required: true
+        schema:
+          type: string
+          example: CAMDX-20201222
+          default: CAMDX-20201222
+        description: |
+          CamDigiKey''s Member:
+          * **DEVELOPMENT**: `CAMDX-20201222`
+          * **PRODUCTION**: `CAMDX-000012`
+tags:
+  - name: E-KYB Verification API

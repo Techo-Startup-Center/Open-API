@@ -1,0 +1,860 @@
+openapi: 3.1.0
+x-stoplight:
+  id: 858b800dc7b4d
+info:
+  title: CamDigiKey KYC Verification API
+  version: 2.1.0
+  description: |
+    ## 1. Introduction
+
+    CamDigiKey is an E-KYC solution focusing on convenience and security for users. Basically, users need to register themselves to the application by providing their faces and identity documents such as ID card or passport. Once the user’s account is approved, they can use CamDigiKey mobile application to login to any CamDigiKey partner’s portals.
+
+    For organization or institution, CamDigiKey provides open KYC verification APIs which enable fast user on board on the organization or institution’s platform. The open KYC verification APIs consist of checking user info and face against data from MOI and verifying user liveness to ensure user is a real human.
+
+    This document will focus on integration with CamDigiKey as authentication/authorization and the usage of open KYC verification APIs via CamDX.
+
+    ## 2. APIs Environment
+
+    **Request Based URL:**
+    ```
+    http(s)://{CONSUMER_SS_MEMBER_URL}/r1/CAMBODIA/GOV/{CAMDIGIKEY_MEMBER_CODE}/CAMDIGIKEY_KYC
+    ```
+    - `http(s)://{CONSUMER_SS_MEMBER_URL}/r1/` The base URL of the consumer's security server.
+    - `CAMBODIA/GOV/{CAMDIGIKEY_MEMBER_CODE}/CAMDIGIKEY_KYC` Path containing the provider's API details, including the member code, and specific service.
+
+    **Request Header:**
+    ```
+    X-Road-Client: CAMBODIA/GOV/{REQUESTER_SS_MEMBER_CODE}/{REQUESTER_SS_SUBSYSTEM_CODE}
+    ```
+    - `X-Road-Client` The identifier of the consumer, which is recognized and authorized by the provider.
+
+    #
+    | Environment | CAMDIGIKEY_MEMBER_CODE |
+    | ----------- | ---------------------- |
+    | **DEVELOPMENT**| CAMDX-20201222 |
+    | **PRODUCTION** | CAMDX-000003 |
+
+
+    #### Example:
+
+    DEVELOPMENT: 
+    ```
+    http(s)://[ss-dev.consumer1.com.kh]/r1/CAMBODIA/GOV/CAMDX-20201222/CAMDIGIKEY_KYC 
+    ```
+    PRODUCTION: 
+    ```
+    http(s)://[ss.consumer1.com.kh]/r1/CAMBODIA/GOV/CAMDX-000003/CAMDIGIKEY_KYC
+    ```
+
+    ## 3. API ERROR CODES
+    #
+    | Error Code | Message                                            |
+    | ---------- | -------------------------------------------------- |
+    | **420**    | Request quota reached                              |
+    | **421**    | IP address is not allowed to request               |
+    | **500**    | Problem with facial recognition from requested image/video |
+    | **501**    | Problem detecting face from submitted Idcard Image |
+    | **502**    | Internal services error                            |
+    | **503**    | Problem with connection to MOI service             |
+    | **504**    | Problem with data from MOI service                 |
+    | **505**    | Invalid request or internal server error           |
+    | **506**    | OCR service error                                  |
+    | **507**    | OCR service network problem                        |
+  contact:
+    name: CamDX Operator
+    email: camdx-info@techostartup.center
+    url: 'https://www.camdx.gov.kh/#contact'
+  license:
+    name: MIT
+    url: 'https://spdx.org/licenses/MIT'
+  termsOfService: 'https://www.camdx.gov.kh/terms.html'
+  summary: CamDigiKey KYC Verification API
+servers: []
+components:
+  securitySchemes: {}
+  parameters:
+    XRoadClient:
+      name: X-Road-Client
+      in: header
+      required: true
+      schema:
+        type: string
+        example: CAMBODIA/GOV/CAMDX-20201234/SUBSYTEM_CODE
+      description: |
+        X-Road-Client Request Header 
+        * Example: `CAMBODIA/GOV/CAMDX-20201234/SUBSYTEM_CODE`
+    MemberCode:
+      name: member_code
+      in: path
+      required: true
+      schema:
+        type: string
+        example: CAMDX-20201222
+        default: CAMDX-20201222
+      description: |
+        CamDigiKey''s Member:
+        * **DEVELOPMENT**: `CAMDX-20201222`
+        * **PRODUCTION**: `CAMDX-000003`
+  responses:
+    info:
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/BaseResponse'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/BaseScoringResult'
+          examples:
+            example-1:
+              value:
+                error: 0
+                message: Successfully
+                data:
+                  idNumber: '012345678'
+                  score: 1
+                  incorrectFields:
+                    - incorrectFieldName
+        application/xml:
+          schema:
+            type: object
+            properties: {}
+    ocrIdCard:
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/BaseResponse'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/UserInfoResponse'
+          examples:
+            example-1:
+              value:
+                error: 0
+                message: Successfully
+                data:
+                  idNumber: '123456789'
+                  lastNameKh: ហេង
+                  firstNameKh: សំអុល
+                  dob: 12/09/1980
+                  gender: M
+                  lastNameEn: HENG
+                  firstNameEn: SAMOL
+                  expiredDate: 12/09/2030
+                  issuedDate: 13/09/2020
+                  address: ភូមិព្រៃធំ ឃុំពេជសារ ស្រុកកោះអណ្តែត តាកែវ
+                  MRZ1: 'IDKHM123456789<<<<<<<<<<<<<<< '
+                  MRZ2: '123456M2509127KHM<<<<<<<<<<<4 '
+                  MRZ3: 'HENG<<SAMOL<<<<<<<<<<<<<<<<<<<< '
+    infoFace:
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/BaseResponse'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      userInfo:
+                        $ref: '#/components/schemas/BaseScoringResult'
+                      faceMoiScore:
+                        description: '#Range [0,1]'
+                        type: number
+          examples:
+            example-1:
+              value:
+                error: 0
+                message: Successfully
+                data:
+                  userInfo:
+                    idNumber: '012345678'
+                    score: 1
+                    incorrectFields:
+                      - incorrectFieldName
+                  faceMoiScore: 0.5696822
+    infoFaceIdCard:
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/BaseResponse'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      userInfo:
+                        $ref: '#/components/schemas/BaseScoringResult'
+                      faceDocumentScore:
+                        description: '#Range [0,1]'
+                        type: number
+                      faceMoiScore:
+                        description: '#Range [0,1]'
+                        type: number
+          examples:
+            example-1:
+              value:
+                error: 0
+                message: Successfully
+                data:
+                  userInfo:
+                    idNumber: '012345678'
+                    score: 1
+                    incorrectFields:
+                      - incorrectFieldName
+                  faceDocumentScore: 0.9981736
+                  faceMoiScore: 0.5696822
+    infoIdCardLiveness:
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/BaseResponse'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      userInfo:
+                        $ref: '#/components/schemas/BaseScoringResult'
+                      livenessScore:
+                        description: '#Range [0,1]'
+                        type: number
+                      faceDocumentScore:
+                        description: '#Range [0,1]'
+                        type: number
+                      faceMoiScore:
+                        description: '#Range [0,1]'
+                        type: number
+          examples:
+            example-1:
+              value:
+                error: 0
+                message: Successfully
+                data:
+                  userInfo:
+                    idNumber: '012345678'
+                    score: 1
+                    incorrectFields:
+                      - incorrectFieldName
+                  faceDocumentScore: 0.9981736
+                  faceMoiScore: 0.5696822
+    error502:
+      description: Error with status code 502
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: integer
+              message:
+                type: string
+              data:
+                type: 'null'
+            x-examples:
+              example-1:
+                error: 502
+                message: There is problem getting user info from MOI.
+                data: null
+          examples:
+            example-1:
+              value:
+                error: 502
+                message: There is problem getting user info from MOI.
+                data: null
+    error500:
+      description: Error with status code 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: integer
+              message:
+                type: string
+            x-examples:
+              example-1:
+                error: 500
+                message: Request failed with status code 500
+          examples:
+            example-1:
+              value:
+                error: 500
+                message: Request failed with status code 500
+    error400:
+      description: Error with status code 400 Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: integer
+              message:
+                type: string
+              data:
+                type: 'null'
+            x-examples:
+              example-1:
+                error: -1
+                message: |-
+                  JSON parse error: Unrecognized field "issuedDated" (class kh.gov.camdx.camdigikey.openapi.app.dto.UserInfoRequestDto), not marked as ignorable; nested exception is com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException: Unrecognized field "issuedDated" (class kh.gov.camdx.camdigikey.openapi.app.dto.UserInfoRequestDto), not marked as ignorable (9 known properties: "gender", "expiredDate", "idNumber", "dob", "firstNameKh", "issuedDate", "lastNameEn", "lastNameKh", "firstNameEn"])
+                   at [Source: (org.springframework.util.StreamUtils$NonClosingInputStream); line: 1, column: 173] (through reference chain: kh.gov.camdx.camdigikey.openapi.app.dto.UserInfoRequestDto["issuedDated"])
+                data: null
+          examples:
+            example-1:
+              value:
+                error: -1
+                message: Error message from server
+                data: null
+    passportOCR:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/BaseResponse'
+              - type: object
+                x-stoplight:
+                  id: mrjeexlkcotx0
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PassportOCR'
+                    x-stoplight:
+                      id: g0mnbb6gx42l5
+  schemas:
+    BaseResponse:
+      type: object
+      x-examples:
+        example-1:
+          error: 0
+          message: string
+      properties:
+        error:
+          type: integer
+        message:
+          type: string
+      required:
+        - error
+        - message
+      title: Response
+      description: ''
+      examples: []
+      x-stoplight:
+        id: ln015ts5xzal9
+    BaseScoringResult:
+      title: Response - Scoring Result
+      x-stoplight:
+        id: jw9hbywn6jlxi
+      type: object
+      properties:
+        idNumber:
+          type: string
+        score:
+          type: integer
+          description: '#Range [0,1]'
+        incorrectFields:
+          type: array
+          description: Requested Fields or Empty
+          items:
+            type: string
+      examples: []
+    UserInfoResponse:
+      title: Response - User Info
+      x-stoplight:
+        id: zxepyd1lio3f2
+      type: object
+      examples: []
+      description: User Information
+      properties:
+        idNumber:
+          type: string
+          description: ID Card Number
+        firstNameKh:
+          type: string
+          description: First name in Khmer
+        lastNameKh:
+          type: string
+          description: Last name in Khmer
+        firstNameEn:
+          type: string
+          description: First name in English
+        lastNameEn:
+          type: string
+          description: Last name in English
+        gender:
+          type: string
+          description: Gener
+          example: M
+          enum:
+            - M
+            - F
+        dob:
+          type: string
+          example: 12/09/1984
+          description: Date of birth
+        issuedDate:
+          type: string
+          example: 13/09/2015
+          description: Issued Date
+        expiredDate:
+          type: string
+          example: 12/09/2025
+          description: Expired Date
+        address:
+          type: string
+        MRZ1:
+          type: string
+        MRZ2:
+          type: string
+        MRZ3:
+          type: string
+    UserInfo:
+      title: User Info
+      x-stoplight:
+        id: zxepyd1lio3f2
+      type: object
+      properties:
+        idNumber:
+          type: string
+          description: ID Card Number
+        firstNameKh:
+          type: string
+          description: First name in Khmer
+        lastNameKh:
+          type: string
+          description: Last name in Khmer
+        firstNameEn:
+          type: string
+          description: First name in English
+        lastNameEn:
+          type: string
+          description: Last name in English
+        gender:
+          type: string
+          description: Gener
+          example: M
+          enum:
+            - M
+            - F
+        dob:
+          type: string
+          format: date
+          example: '2000-01-31'
+          description: Date of birth
+        issuedDate:
+          type: string
+          format: date
+          example: '2000-01-31'
+          description: Issued Date
+        expiredDate:
+          type: string
+          format: date
+          example: '2000-01-31'
+          description: Expired Date
+      examples:
+        - idNumber: '011196245'
+          firstNameKh: ការឌុល
+          lastNameKh: អេង
+          firstNameEn: KADOL
+          lastNameEn: ENG
+          gender: M
+          dob: '2000-05-06'
+          issuedDate: '2016-03-23'
+          expiredDate: '2026-03-22'
+      description: User Information
+    UserInfoFace:
+      title: User Info and User Face
+      x-stoplight:
+        id: n0t9aueyu17k5
+      type: object
+      examples:
+        - userInfo:
+            idNumber: '011196245'
+            firstNameKh: ការឌុល
+            lastNameKh: អេង
+            firstNameEn: KADOL
+            lastNameEn: ENG
+            gender: M
+            dob: '2000-05-06'
+            issuedDate: '2016-03-23'
+            expiredDate: '2026-03-22'
+          faceImg: base_64_content
+      properties:
+        userInfo:
+          $ref: '#/components/schemas/UserInfo'
+        faceImg:
+          type: string
+          example: base_64_content
+    UserInfoFaceIdCard:
+      title: 'User Info, ID Card and User Face'
+      x-stoplight:
+        id: n0t9aueyu17k5
+      type: object
+      examples:
+        - userInfo:
+            idNumber: '011196245'
+            firstNameKh: ការឌុល
+            lastNameKh: អេង
+            firstNameEn: KADOL
+            lastNameEn: ENG
+            gender: M
+            dob: '2000-05-06'
+            issuedDate: '2016-03-23'
+            expiredDate: '2026-03-22'
+          faceImg: base_64_content
+          idImage: base_64_content
+      properties:
+        userInfo:
+          $ref: '#/components/schemas/UserInfo'
+        faceImg:
+          type: string
+          example: base_64_content
+        idImage:
+          type: string
+          example: base_64_content
+    UserInfoIdCardLiveness:
+      title: 'User Info, ID Card Image and Liveness'
+      x-stoplight:
+        id: n0t9aueyu17k5
+      type: object
+      examples:
+        - actions:
+            - '2'
+            - '1'
+            - '3'
+          userInfo:
+            idNumber: '011196245'
+            firstNameKh: ការឌុល
+            lastNameKh: អេង
+            firstNameEn: KADOL
+            lastNameEn: ENG
+            gender: M
+            dob: '2000-05-06'
+            issuedDate: '2016-03-23'
+            expiredDate: '2026-03-22'
+          idImage: base_64_content
+          liveness: base_64_content
+      properties:
+        actions:
+          type: array
+          description: '#1: turn face to the left, 2: turn face to the right, 3: nod the head'
+          items:
+            type: string
+            example: '["2","1","3"]'
+        userInfo:
+          $ref: '#/components/schemas/UserInfo'
+        idImage:
+          type: string
+          example: base_64_content
+        liveness:
+          type: string
+          example: base_64_content
+      description: ''
+    PassportOCR:
+      type: object
+      properties:
+        expiredDate:
+          type: string
+        dob:
+          type: string
+        document_number:
+          type: string
+        nationality:
+          type: string
+        gender:
+          type: string
+        firstNameEn:
+          type: string
+        lastNameEn:
+          type: string
+      x-examples:
+        Example 1:
+          expiredDate: expired_date
+          dob: dd/MM/yyyy
+          document_number: passport_number
+          nationality: nationality
+          gender: M_or_F
+          firstNameEn: first_name
+          lastNameEn: last_name
+      x-stoplight:
+        id: o56xulbe1nuqd
+paths:
+  '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/info-v2.1':
+    post:
+      summary: Verify User Info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInfo'
+            examples:
+              example-1:
+                value:
+                  idNumber: '011196245'
+                  firstNameKh: ការឌុល
+                  lastNameKh: អេង
+                  firstNameEn: KADOL
+                  lastNameEn: ENG
+                  gender: M
+                  dob: '2000-05-06'
+                  issuedDate: '2016-03-23'
+                  expiredDate: '2026-03-22'
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+            examples:
+              example-1:
+                value: {}
+      operationId: verifyInfo
+      description: |-
+        Verification between submitted information with MOI information
+
+        **API Code**: `KH.GOV.CAMDX-000003.CAMDIGIKEY_KYC.info`
+
+        **Version**: `2.1.0`
+      parameters:
+        - $ref: '#/components/parameters/XRoadClient'
+      responses:
+        '200':
+          $ref: '#/components/responses/info'
+        '400':
+          $ref: '#/components/responses/error400'
+        '500':
+          $ref: '#/components/responses/error500'
+        '502':
+          $ref: '#/components/responses/error502'
+      tags:
+        - KYC Verification API
+    parameters:
+      - $ref: '#/components/parameters/MemberCode'
+  '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/info-face-v2.1':
+    post:
+      summary: Verify User Info and User Face
+      responses:
+        '200':
+          $ref: '#/components/responses/infoFace'
+        '400':
+          $ref: '#/components/responses/error400'
+        '500':
+          $ref: '#/components/responses/error500'
+        '502':
+          $ref: '#/components/responses/error502'
+      operationId: verifyInfoFace
+      description: |-
+        Verification between submitted user information include face image with MOI information
+
+        **API Code**: `KH.GOV.CAMDX-000003.CAMDIGIKEY_KYC.info-face`
+
+        **Version**: `2.1.0`
+      parameters:
+        - $ref: '#/components/parameters/XRoadClient'
+      tags:
+        - KYC Verification API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInfoFace'
+            examples:
+              example-1:
+                value:
+                  userInfo:
+                    idNumber: '011196245'
+                    firstNameKh: ការឌុល
+                    lastNameKh: អេង
+                    firstNameEn: KADOL
+                    lastNameEn: ENG
+                    gender: M
+                    dob: '2000-05-06'
+                    issuedDate: '2016-03-23'
+                    expiredDate: '2026-03-22'
+                  faceImage: base_64_content
+    parameters:
+      - $ref: '#/components/parameters/MemberCode'
+  '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/info-face-idcard-v2.1':
+    post:
+      summary: 'Verify User Info, ID Card and User Face'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInfoFaceIdCard'
+            examples:
+              example-1:
+                value:
+                  userInfo:
+                    idNumber: '011196245'
+                    firstNameKh: ការឌុល
+                    lastNameKh: អេង
+                    firstNameEn: KADOL
+                    lastNameEn: ENG
+                    gender: M
+                    dob: '2000-05-06'
+                    issuedDate: '2016-03-23'
+                    expiredDate: '2026-03-22'
+                  faceImg: base_64_content
+                  idImage: base_64_content
+        description: ''
+      responses:
+        '200':
+          $ref: '#/components/responses/infoFaceIdCard'
+        '400':
+          $ref: '#/components/responses/error400'
+        '500':
+          $ref: '#/components/responses/error500'
+        '502':
+          $ref: '#/components/responses/error502'
+      operationId: verifyInfoFaceIdCard
+      description: |-
+        - Verification with submitted document, face verification with retrieved image from MOI
+        - Verification of submitted information with MOI information
+
+        **API Code**: `KH.GOV.CAMDX-000003.CAMDIGIKEY_KYC.info-face-idcard`
+
+        **Version**: `2.1.0`
+      parameters:
+        - $ref: '#/components/parameters/XRoadClient'
+      tags:
+        - KYC Verification API
+    parameters:
+      - $ref: '#/components/parameters/MemberCode'
+  '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/info-idcard-liveness-v2.1':
+    post:
+      summary: 'Verify User Info, ID Card Image, and Liveness'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInfoIdCardLiveness'
+      responses:
+        '200':
+          $ref: '#/components/responses/infoIdCardLiveness'
+        '400':
+          $ref: '#/components/responses/error400'
+        '500':
+          $ref: '#/components/responses/error500'
+        '502':
+          $ref: '#/components/responses/error502'
+      description: |-
+        - Liveness verification check, face verification with submitted document, face verification with retrieved image from MOI 
+        - Verification of submitted information with MOI information
+
+
+        **API Code**: `KH.GOV.CAMDX-000003.CAMDIGIKEY_KYC.info-idcard-liveness`
+
+        **Version**: `2.1.0`
+      operationId: verifyInfoIdcardLiveness
+      parameters:
+        - $ref: '#/components/parameters/XRoadClient'
+      tags:
+        - KYC Verification API
+    parameters:
+      - $ref: '#/components/parameters/MemberCode'
+  '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/ocr-idcard-v2.1':
+    post:
+      summary: Khmer ID Card OCR
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                example-1:
+                  idImage: base_64_content
+              properties:
+                idImage:
+                  type: string
+                  description: base_64_content
+            examples:
+              example-1:
+                value:
+                  idImage: string
+      responses:
+        '200':
+          $ref: '#/components/responses/ocrIdCard'
+        '400':
+          $ref: '#/components/responses/error400'
+        '500':
+          $ref: '#/components/responses/error500'
+        '502':
+          $ref: '#/components/responses/error502'
+      operationId: readOcrIDCard
+      description: |-
+        OCR extracts user's information from submitted identification image
+
+        **API Code**: `KH.GOV.CAMDX-000003.CAMDIGIKEY_KYC.ocr-idcard`
+
+        **Version**: `2.1.0`
+      parameters:
+        - $ref: '#/components/parameters/XRoadClient'
+      tags:
+        - KYC Verification API
+    parameters:
+      - $ref: '#/components/parameters/MemberCode'
+  '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/ocr-passport-v2.1':
+    post:
+      summary: Passport OCR
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                example-1:
+                  idImage: base_64_content
+              properties:
+                idImage:
+                  type: string
+                  description: base_64_content
+            examples:
+              example-1:
+                value:
+                  idImage: string
+      responses:
+        '200':
+          $ref: '#/components/responses/ocrIdCard'
+        '400':
+          $ref: '#/components/responses/error400'
+        '500':
+          $ref: '#/components/responses/error500'
+        '502':
+          $ref: '#/components/responses/error502'
+      operationId: readOcrIDCard
+      description: |-
+        OCR extracts user's information from submitted passport image
+
+        **API Code**: `KH.GOV.CAMDX-000003.CAMDIGIKEY_KYC.ocr-passport`
+
+        **Version**: `2.1.0`
+      parameters:
+        - $ref: '#/components/parameters/XRoadClient'
+      tags:
+        - KYC Verification API
+    parameters:
+      - name: member_code
+        in: path
+        required: true
+        schema:
+          type: string
+          example: CAMDX-20201222
+          default: CAMDX-20201222
+        description: |
+          CamDigiKey''s Member:
+          * **DEVELOPMENT**: `CAMDX-20201222`
+          * **PRODUCTION**: `CAMDX-000003`
+tags:
+  - name: KYC Verification API
