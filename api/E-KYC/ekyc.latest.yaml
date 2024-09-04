@@ -833,7 +833,7 @@ paths:
           $ref: '#/components/responses/error500'
         '502':
           $ref: '#/components/responses/error502'
-      operationId: readOcrIDCard
+      operationId: readOcrPassport
       description: |-
         OCR extracts user's information from submitted passport image
 

@@ -37,7 +37,7 @@ components:
         example: CAMDX-20201222
         default: CAMDX-20201222
       description: |
-        CamDigiKey''s Member:
+        E-KYB's Member Code:
         * **DEVELOPMENT**: `CAMDX-20201222`
         * **PRODUCTION**: `CAMDX-000012`
   responses:
@@ -124,11 +124,9 @@ components:
               data:
                 type: 'null'
             x-examples:
-              example-1:
+              Example 1:
                 error: -1
-                message: |-
-                  JSON parse error: Unrecognized field "issuedDated" (class kh.gov.camdx.camdigikey.openapi.app.dto.UserInfoRequestDto), not marked as ignorable; nested exception is com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException: Unrecognized field "issuedDated" (class kh.gov.camdx.camdigikey.openapi.app.dto.UserInfoRequestDto), not marked as ignorable (9 known properties: "gender", "expiredDate", "idNumber", "dob", "firstNameKh", "issuedDate", "lastNameEn", "lastNameKh", "firstNameEn"])
-                   at [Source: (org.springframework.util.StreamUtils$NonClosingInputStream); line: 1, column: 173] (through reference chain: kh.gov.camdx.camdigikey.openapi.app.dto.UserInfoRequestDto["issuedDated"])
+                message: Error message from server
                 data: null
           examples:
             example-1:
@@ -514,7 +512,7 @@ paths:
           example: CAMDX-20201222
           default: CAMDX-20201222
         description: |
-          CamDigiKey''s Member:
+          E-KYB's Member Code:
           * **DEVELOPMENT**: `CAMDX-20201222`
           * **PRODUCTION**: `CAMDX-000012`
   '/r1/CAMBODIA/GOV/{member_code}/TSC-EKYB-API/company-directors':
@@ -568,7 +566,7 @@ paths:
           example: CAMDX-20201222
           default: CAMDX-20201222
         description: |
-          CamDigiKey''s Member:
+          E-KYB's Member Code:
           * **DEVELOPMENT**: `CAMDX-20201222`
           * **PRODUCTION**: `CAMDX-000012`
   '/r1/CAMBODIA/GOV/{member_code}/TSC-EKYB-API/enterprise-opening-announcement':
@@ -624,7 +622,7 @@ paths:
           example: CAMDX-20201222
           default: CAMDX-20201222
         description: |
-          CamDigiKey''s Member:
+          E-KYB's Member Code:
           * **DEVELOPMENT**: `CAMDX-20201222`
           * **PRODUCTION**: `CAMDX-000012`
   '/r1/CAMBODIA/GOV/{member_code}/TSC-EKYB-API/enterprise-opening-announcement-director':
@@ -666,7 +664,7 @@ paths:
           example: CAMDX-20201222
           default: CAMDX-20201222
         description: |
-          CamDigiKey''s Member:
+          E-KYB's Member Code:
           * **DEVELOPMENT**: `CAMDX-20201222`
           * **PRODUCTION**: `CAMDX-000012`
 tags:
