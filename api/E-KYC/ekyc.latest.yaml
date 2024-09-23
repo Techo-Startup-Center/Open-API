@@ -747,6 +747,36 @@ paths:
         - $ref: '#/components/parameters/XRoadClient'
     parameters:
       - $ref: '#/components/parameters/MemberCode'
+  '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/info-idcard-liveness-v2.1':
+    post:
+      summary: 'Verify User Info, ID Card Image, and Liveness'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInfoIdCardLiveness'
+      responses:
+        '200':
+          $ref: '#/components/responses/infoIdCardLiveness'
+        '400':
+          $ref: '#/components/responses/error400'
+        '500':
+          $ref: '#/components/responses/error500'
+        '502':
+          $ref: '#/components/responses/error502'
+      description: |-
+        - Liveness verification check, face verification with submitted document, face verification with retrieved image from MOI 
+        - Verification of submitted information with MOI information
+
+
+        **API Code**: `KH.GOV.CAMDX-000003.CAMDIGIKEY_KYC.info-idcard-liveness`
+
+        **Version**: `2.1.0`
+      operationId: verifyInfoIdcardLiveness
+      parameters:
+        - $ref: '#/components/parameters/XRoadClient'
+    parameters:
+      - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/ocr-idcard-v2.1':
     post:
       summary: Khmer ID Card OCR
@@ -782,36 +812,6 @@ paths:
         **API Code**: `KH.GOV.CAMDX-000003.CAMDIGIKEY_KYC.ocr-idcard`
 
         **Version**: `2.1.0`
-      parameters:
-        - $ref: '#/components/parameters/XRoadClient'
-    parameters:
-      - $ref: '#/components/parameters/MemberCode'
-  '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/info-idcard-liveness-v2.1':
-    post:
-      summary: 'Verify User Info, ID Card Image, and Liveness'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserInfoIdCardLiveness'
-      responses:
-        '200':
-          $ref: '#/components/responses/infoIdCardLiveness'
-        '400':
-          $ref: '#/components/responses/error400'
-        '500':
-          $ref: '#/components/responses/error500'
-        '502':
-          $ref: '#/components/responses/error502'
-      description: |-
-        - Liveness verification check, face verification with submitted document, face verification with retrieved image from MOI 
-        - Verification of submitted information with MOI information
-
-
-        **API Code**: `KH.GOV.CAMDX-000003.CAMDIGIKEY_KYC.info-idcard-liveness`
-
-        **Version**: `2.1.0`
-      operationId: verifyInfoIdcardLiveness
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
     parameters:
