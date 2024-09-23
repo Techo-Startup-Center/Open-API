@@ -93,7 +93,7 @@ components:
         example: CAMDX-20201222
         default: CAMDX-20201222
       description: |
-        CamDigiKey''s Member:
+        CamDigiKey's Member:
         * **DEVELOPMENT**: `CAMDX-20201222`
         * **PRODUCTION**: `CAMDX-000003`
   responses:
@@ -864,6 +864,6 @@ paths:
           example: CAMDX-20201222
           default: CAMDX-20201222
         description: |
-          CamDigiKey''s Member:
+          CamDigiKey's Member:
           * **DEVELOPMENT**: `CAMDX-20201222`
           * **PRODUCTION**: `CAMDX-000003`
