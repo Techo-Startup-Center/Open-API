@@ -321,7 +321,7 @@ components:
                 message: Error message from server
                 data: null
     passportOCR:
-      description: Example response
+      description: Successful Response
       content:
         application/json:
           schema:
@@ -332,9 +332,22 @@ components:
                   id: 84a842hkronk5
                 properties:
                   data:
-                    $ref: '#/components/schemas/PassportOCR'
+                    $ref: '#/components/schemas/passportOCR'
                     x-stoplight:
                       id: j4qs0i8qjybwg
+          examples:
+            example-1:
+              value:
+                error: 0
+                message: Successfully
+                data:
+                  expiredDate: string
+                  dob: string
+                  document_number: string
+                  nationality: string
+                  gender: string
+                  firstNameEn: string
+                  lastNameEn: string
   schemas:
     BaseResponse:
       type: object
@@ -342,6 +355,10 @@ components:
         example-1:
           error: 0
           message: string
+      title: Response
+      examples: []
+      x-stoplight:
+        id: m7qynhfusp2ae
       properties:
         error:
           type: integer
@@ -350,11 +367,6 @@ components:
       required:
         - error
         - message
-      title: Response
-      description: ''
-      examples: []
-      x-stoplight:
-        id: m7qynhfusp2ae
     BaseScoringResult:
       title: Response - Scoring Result
       x-stoplight:
@@ -564,25 +576,10 @@ components:
           type: string
           example: base_64_content
       description: ''
-    PassportOCR:
+    passportOCR:
       type: object
-      properties:
-        expiredDate:
-          type: string
-        dob:
-          type: string
-        document_number:
-          type: string
-        nationality:
-          type: string
-        gender:
-          type: string
-        firstNameEn:
-          type: string
-        lastNameEn:
-          type: string
       x-examples:
-        Example 1:
+        example-1:
           expiredDate: expired_date
           dob: dd/MM/yyyy
           document_number: passport_number
@@ -592,6 +589,29 @@ components:
           lastNameEn: last_name
       x-stoplight:
         id: 79mc87pkbwfop
+      description: User Information
+      properties:
+        expiredDate:
+          type: string
+          description: Expired Date
+        dob:
+          type: string
+          description: Date of Birth
+        document_number:
+          type: string
+          description: Passport Number
+        nationality:
+          type: string
+          description: Nationality
+        gender:
+          type: string
+          description: Gender
+        firstNameEn:
+          type: string
+          description: Firstname in English
+        lastNameEn:
+          type: string
+          description: Lastname in English
 paths:
   '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/info-v2.1':
     post:
@@ -727,36 +747,6 @@ paths:
         - $ref: '#/components/parameters/XRoadClient'
     parameters:
       - $ref: '#/components/parameters/MemberCode'
-  '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/info-idcard-liveness-v2.1':
-    post:
-      summary: 'Verify User Info, ID Card Image, and Liveness'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserInfoIdCardLiveness'
-      responses:
-        '200':
-          $ref: '#/components/responses/infoIdCardLiveness'
-        '400':
-          $ref: '#/components/responses/error400'
-        '500':
-          $ref: '#/components/responses/error500'
-        '502':
-          $ref: '#/components/responses/error502'
-      description: |-
-        - Liveness verification check, face verification with submitted document, face verification with retrieved image from MOI 
-        - Verification of submitted information with MOI information
-
-
-        **API Code**: `KH.GOV.CAMDX-000003.CAMDIGIKEY_KYC.info-idcard-liveness`
-
-        **Version**: `2.1.0`
-      operationId: verifyInfoIdcardLiveness
-      parameters:
-        - $ref: '#/components/parameters/XRoadClient'
-    parameters:
-      - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/ocr-idcard-v2.1':
     post:
       summary: Khmer ID Card OCR
@@ -796,6 +786,36 @@ paths:
         - $ref: '#/components/parameters/XRoadClient'
     parameters:
       - $ref: '#/components/parameters/MemberCode'
+  '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/info-idcard-liveness-v2.1':
+    post:
+      summary: 'Verify User Info, ID Card Image, and Liveness'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInfoIdCardLiveness'
+      responses:
+        '200':
+          $ref: '#/components/responses/infoIdCardLiveness'
+        '400':
+          $ref: '#/components/responses/error400'
+        '500':
+          $ref: '#/components/responses/error500'
+        '502':
+          $ref: '#/components/responses/error502'
+      description: |-
+        - Liveness verification check, face verification with submitted document, face verification with retrieved image from MOI 
+        - Verification of submitted information with MOI information
+
+
+        **API Code**: `KH.GOV.CAMDX-000003.CAMDIGIKEY_KYC.info-idcard-liveness`
+
+        **Version**: `2.1.0`
+      operationId: verifyInfoIdcardLiveness
+      parameters:
+        - $ref: '#/components/parameters/XRoadClient'
+    parameters:
+      - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/ocr-passport-v2.1':
     post:
       summary: Passport OCR
@@ -808,16 +828,18 @@ paths:
                 example-1:
                   idImage: base_64_content
               properties:
-                idImage:
+                passportImage:
                   type: string
                   description: base_64_content
+                  x-stoplight:
+                    id: zves84zwjljx7
             examples:
               example-1:
                 value:
-                  idImage: string
+                  passportImage: string
       responses:
         '200':
-          $ref: '#/components/responses/ocrIdCard'
+          $ref: '#/components/responses/passportOCR'
         '400':
           $ref: '#/components/responses/error400'
         '500':
