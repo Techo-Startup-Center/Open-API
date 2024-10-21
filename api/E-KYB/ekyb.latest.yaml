@@ -279,7 +279,7 @@ components:
             id: nsrsj0sb487rd
           type: array
           items:
-            $ref: '#/components/schemas/Director'
+            $ref: '#/components/schemas/Request-Director'
             x-stoplight:
               id: mnalel923iqlj
     Request-Enterprise:
