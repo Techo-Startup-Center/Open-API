@@ -3,8 +3,8 @@ x-stoplight:
   id: n2o92rpt5jag0
 info:
   title: E-KYB OPEN APIS
-  version: 1.0.0
-  description: "## 1. Introduction\n\nE-KYB, or Electronic Know Your Business, is a comprehensive system designed to verify the identity of businesses. It assesses their legitimacy by considering their business activities and legal documentation. E-KYB not only aids in preventing money laundering but also facilitates tax collection processes. \n\nIn the ongoing Online Business Registration project, multiple line ministries have actively participated in Phases 1, 2, and 3. As part of the initial registration process, numerous companies have registered under the Ministry of Commerce (MOC), General Department of Taxation (GDT) and Ministry of Labour and Vocational Training (MLVT). Leveraging the data provided by these ministries, we can effectively verify and validate the information of registered companies. \n\nBuilding on the progress so far, the next steps involve collaborating closely with the line ministry to enhance the verification of company information. Additionally, the line ministry will develop E-KYB verification APIs, which will be instrumental in verifying registered company details, tax registrations and payments, and financial information. These APIs will play an important role in ensuring the accuracy and reliability of the data pertaining to businesses.\n\n## 2. E-KYB API and Base Registry Data(Phase-1)\n\n**Verification APIs:**\n1. Verify basic company information\n2. Verify company directors \n3. Verify enterprise opening announcement\n4. Verify director of enterprise opening announcement \n\n![](https://raw.githubusercontent.com/Techo-Startup-Center/CamDX-Open-API/feature/aos/assets/ekyb-diagram.png)\n\n\n## 2. APIs Environment\n\n**Request Based URL:**\n```\nhttp(s)://{CONSUMER_SS_MEMBER_URL}/r1/CAMBODIA/GOV/{PROVIDER_MEMBER_CODE}/TSC-EKYB-API\n```\n- `http(s)://{CONSUMER_SS_MEMBER_URL}/r1/` The base URL of the consumer's security server.\n- `CAMBODIA/GOV/{PROVIDER_MEMBER_CODE}/TSC-EKYB-API` Path containing the provider's API details, including the member code, and specific service.\n\n**Request Header:**\n```\nX-Road-Client: CAMBODIA/GOV/{CONSUMER_SS_MEMBER_CODE}/{CONSUMER_SS_SUBSYSTEM_CODE}\n```\n- `X-Road-Client` The identifier of the consumer, which is recognized and authorized by the provider.\n\n#\n| Environment | PROVIDER_MEMBER_CODE|\n| ----------- | ---------------------- |\n| **DEVELOPMENT**| CAMDX-20201222 |\n| **PRODUCTION** | CAMDX-000012 |\n\n\n#### Example:\n\nDEVELOPMENT: \n```\nhttp(s)://[ss-dev.consumer1.com.kh]/r1/CAMBODIA/GOV/CAMDX-20201222/TSC-EKYB-API \n```\nPRODUCTION: \n```\nhttp(s)://[ss.consumer1.com.kh]/r1/CAMBODIA/GOV/CAMDX-000012/TSC-EKYB-API\n```\n\n### \U0001F9F0 Code Mapping\n\n<table>\n <tbody><tr>\n  <td>Code Type</td>\n  <td>Code</td>\n  <td>Khmer Definition</td>\n  <td>English Definition</td>\n </tr>\n <tr>\n  <td rowspan=\"7\">Company Types</td>\n  <td>PRIVATE_LIMITED_COMPANY</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ក្រុមហ៊ុនឯកជនទទួលខុសត្រូវមានកម្រិត</span></td>\n  <td>Private Limited Company</td>\n </tr>\n <tr>\n  <td>PUBLIC_LIMITED_COMPANY</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ក្រុមហ៊ុនមហាជនទទួលខុសត្រូវមានកម្រិត</span></td>\n  <td>Public Limited Company</td>\n </tr>\n <tr>\n  <td>REGISTER_BRANCH_OFFICE_OF_FOREIGN_COMPANY</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ចុះបញ្ជីជាសាខាក្រុមហ៊ុននៃក្រុមហ៊ុនបរទេស</span></td>\n  <td>Register Branch Office of Foreign Company</td>\n </tr>\n <tr>\n  <td>REGISTER_COMMERCIAL_REPRESENTATIVE_OFFICE</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ចុះបញ្ជីជាការិយាល័យតំណាង</span></td>\n  <td>Register Commercial Representative Office</td>\n </tr>\n <tr>\n  <td>SOLE_PROPRIETORSHIP</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">សហគ្រាសឯកបុគ្គល</span></td>\n  <td>Sole Proprietorship</td>\n </tr>\n <tr>\n  <td>GENERAL_PARTNERSHIP</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ក្រុមហ៊ុនសហកម្មសិទ្ធិទូទៅ</span></td>\n  <td>General Partnership</td>\n </tr>\n <tr>\n  <td>LIMITED_PARTNERSHIP</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ក្រុមហ៊ុនសហកម្មសិទ្ធិមានកម្រិត</span></td>\n  <td>Limited Partnership</td>\n </tr>\n</tbody></table>\n"
+  version: 1.0.1
+  description: "## 1. Introduction\n\nE-KYB (Electronic Know Your Business) is a system designed to verify the identity and legitimacy of businesses by validating their activities and legal documentation. It helps ensure trust in the business ecosystem by reducing risks such as fraud and supporting regulatory compliance.\n\nAs part of the ongoing Online Business Registration (OBR) project, multiple line ministries—including the Ministry of Commerce (MOC), General Department of Taxation (GDT), and Ministry of Labour and Vocational Training (MLVT)—have participated across Phases 1, 2, and 3. The data collected through these ministries enables effective verification of registered companies.\n\nBuilding on this foundation, the next phase focuses on strengthening collaboration with line ministries to enhance business verification. This includes the development of E-KYB verification APIs, which will validate company details, tax registrations and payments, and financial information—ensuring the accuracy, integrity, and reliability of business data.\n\n## 2. E-KYB API\n\n**Verification APIs:**\n1. Verify basic company information\n2. Verify company tin\n3. Verify company directors \n4. Verify enterprise opening announcement\n5. Verify director of enterprise opening announcement \n\n![](https://raw.githubusercontent.com/Techo-Startup-Center/CamDX-Open-API/feature/aos/assets/ekyb-diagram.png)\n\n\n## 2. APIs Environment\n\n**Request Based URL:**\n```\nhttp(s)://{CONSUMER_SS_MEMBER_URL}/r1/CAMBODIA/GOV/{PROVIDER_MEMBER_CODE}/TSC-EKYB-API\n```\n- `http(s)://{CONSUMER_SS_MEMBER_URL}/r1/` The base URL of the consumer's security server.\n- `CAMBODIA/GOV/{PROVIDER_MEMBER_CODE}/TSC-EKYB-API` Path containing the provider's API details, including the member code, and specific service.\n\n**Request Header:**\n```\nX-Road-Client: CAMBODIA/COM/{CONSUMER_SS_MEMBER_CODE}/{CONSUMER_SS_SUBSYSTEM_CODE}\n```\n- `X-Road-Client` The identifier of the consumer, which is recognized and authorized by the provider.\n\n#\n| Environment | PROVIDER_MEMBER_CODE|\n| ----------- | ---------------------- |\n| **DEVELOPMENT**| CAMDX-20201222 |\n| **PRODUCTION** | CAMDX-000012 |\n\n\n#### Example:\n\nDEVELOPMENT: \n```\nhttp(s)://[ss-dev.consumer1.com.kh]/r1/CAMBODIA/GOV/CAMDX-20201222/TSC-EKYB-API \n```\nPRODUCTION: \n```\nhttp(s)://[ss.consumer1.com.kh]/r1/CAMBODIA/GOV/CAMDX-000012/TSC-EKYB-API\n```\n\n### \U0001F9F0 Code Mapping\n\n<table>\n <tbody><tr>\n  <td>Code Type</td>\n  <td>Code</td>\n  <td>Khmer Definition</td>\n  <td>English Definition</td>\n </tr>\n <tr>\n  <td rowspan=\"7\">Company Types</td>\n  <td>PRIVATE_LIMITED_COMPANY</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ក្រុមហ៊ុនឯកជនទទួលខុសត្រូវមានកម្រិត</span></td>\n  <td>Private Limited Company</td>\n </tr>\n <tr>\n  <td>PUBLIC_LIMITED_COMPANY</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ក្រុមហ៊ុនមហាជនទទួលខុសត្រូវមានកម្រិត</span></td>\n  <td>Public Limited Company</td>\n </tr>\n <tr>\n  <td>REGISTER_BRANCH_OFFICE_OF_FOREIGN_COMPANY</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ចុះបញ្ជីជាសាខាក្រុមហ៊ុននៃក្រុមហ៊ុនបរទេស</span></td>\n  <td>Register Branch Office of Foreign Company</td>\n </tr>\n <tr>\n  <td>REGISTER_COMMERCIAL_REPRESENTATIVE_OFFICE</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ចុះបញ្ជីជាការិយាល័យតំណាង</span></td>\n  <td>Register Commercial Representative Office</td>\n </tr>\n <tr>\n  <td>SOLE_PROPRIETORSHIP</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">សហគ្រាសឯកបុគ្គល</span></td>\n  <td>Sole Proprietorship</td>\n </tr>\n <tr>\n  <td>GENERAL_PARTNERSHIP</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ក្រុមហ៊ុនសហកម្មសិទ្ធិទូទៅ</span></td>\n  <td>General Partnership</td>\n </tr>\n <tr>\n  <td>LIMITED_PARTNERSHIP</td>\n  <td><span style=\"mso-bidi-language:KHM\" lang=\"KHM\">ក្រុមហ៊ុនសហកម្មសិទ្ធិមានកម្រិត</span></td>\n  <td>Limited Partnership</td>\n </tr>\n</tbody></table>\n"
   contact:
     name: CamDX Operator
     email: camdx-info@techostartup.center
@@ -13,9 +13,10 @@ info:
     name: MIT
     url: 'https://spdx.org/licenses/MIT'
   termsOfService: 'https://www.camdx.gov.kh/terms.html'
-  summary: E-KYC Verification APIs
+  summary: E-KYB Verification APIs
 servers:
-  - url: 'https://security-server.consumer1.com'
+  - url: 'https://consumer.securityserver.local'
+    description: Security Server
 components:
   securitySchemes: {}
   parameters:
@@ -32,15 +33,15 @@ components:
     MemberCode:
       name: member_code
       in: path
-      required: true
       schema:
         type: string
         example: CAMDX-20201222
-        default: CAMDX-20201222
+        default: none
       description: |
-        E-KYB''s Member:
+        E-KYB's Member:
         * **DEVELOPMENT**: `CAMDX-20201222`
         * **PRODUCTION**: `CAMDX-000012`
+      required: true
   responses:
     companyInfo:
       description: Successful Response
@@ -56,7 +57,7 @@ components:
           examples:
             example-1:
               value:
-                error: 0
+                code: 0
                 message: Successfully
                 data:
                   idNumber: '012345678'
@@ -179,6 +180,12 @@ components:
                     $ref: '#/components/schemas/Response-ScoringResult'
                     x-stoplight:
                       id: fxbtqwrww3f6z
+    tin:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-Tin'
   schemas:
     Request-CompanyInfo:
       title: Company Info Request
@@ -191,7 +198,7 @@ components:
           type: string
           x-stoplight:
             id: liteicru2sckk
-          description: Single ID
+          description: Online Business Registration's Single ID
         tin:
           type: string
           x-stoplight:
@@ -207,6 +214,34 @@ components:
           x-stoplight:
             id: 0n5zfofl3o5i3
           description: Company name in Khmer
+      required:
+        - single_id
+    Request-Tin:
+      title: Tin
+      x-stoplight:
+        id: ns8h6xvn9sew4
+      type: object
+      description: Verify Company Information using TIN
+      properties:
+        tin:
+          type: string
+          x-stoplight:
+            id: 825udun9wl4s1
+          description: Company’s TIN
+        company_name_en:
+          type: string
+          x-stoplight:
+            id: er1w1t4dweot3
+          description: Company name in English
+        company_name_kh:
+          type: string
+          x-stoplight:
+            id: 0n5zfofl3o5i3
+          description: Company name in Khmer
+      required:
+        - tin
+        - company_name_en
+        - company_name_kh
     Request-Director:
       title: Director
       x-stoplight:
@@ -263,7 +298,7 @@ components:
           type: string
           x-stoplight:
             id: rr4ecyy7moo6y
-          description: Single ID
+          description: Online Business Registration's Single ID
         company_name_en:
           type: string
           x-stoplight:
@@ -308,7 +343,7 @@ components:
           x-stoplight:
             id: xjhkoh6w29daf
           description: Company’s TIN
-        opening_data:
+        opening_date:
           type: string
           x-stoplight:
             id: dma5e3gjcv2uq
@@ -357,6 +392,8 @@ components:
           x-stoplight:
             id: pa32282065zby
           description: Number of women foreigner employees
+      required:
+        - single_id
     Request-EnterpriseDirector:
       title: EnterpriseDirectorRequest
       x-stoplight:
@@ -409,27 +446,34 @@ components:
             id: 0rbm5vih186wn
           description: Director nationality (code-2)
           example: KH
+      required:
+        - single_id
     Response-Base:
       type: object
       x-examples:
         example-1:
           error: 0
           message: string
-      properties:
-        error:
-          type: integer
-        message:
-          type: string
-      required:
-        - error
-        - message
       title: Response
-      description: ''
       examples: []
       x-stoplight:
         id: 6r65xlhns96pf
+      properties:
+        code:
+          type: integer
+          x-stoplight:
+            id: m6pr5ci7nc4cv
+          description: |-
+            0: Successfully;
+            400: Not found;
+            500: Invalid access token
+        message:
+          type: string
+      required:
+        - code
+        - message
     Response-ScoringResult:
-      title: Response - Scoring Result
+      title: Response - Company Scoring Result
       x-stoplight:
         id: zdkl1g5j2vrtw
       type: object
@@ -473,6 +517,25 @@ components:
             x-stoplight:
               id: jydvp1os1a188
             type: string
+    Response-Tin:
+      title: TinResponse
+      x-stoplight:
+        id: lfvauqky57ltm
+      type: object
+      properties:
+        code:
+          type: integer
+          x-stoplight:
+            id: jcozgq6xspz50
+          description: |-
+            0: Successfully;
+            400: Not found;
+            500: Invalid access token
+        message:
+          type: string
+          x-stoplight:
+            id: 4juszv0q3wcxj
+          description: Response message
   requestBodies: {}
 paths:
   '/r1/CAMBODIA/GOV/{member_code}/TSC-EKYB-API/company-info':
@@ -483,12 +546,19 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Request-CompanyInfo'
+            examples:
+              Example 1:
+                value:
+                  single_id: '1010016182'
+                  tin: K008-902300031
+                  company_name_en: 'JAICODE CO., LTD.'
+                  company_name_kh: ចៃកូដ ឯ.ក
         description: ''
       operationId: verifyBasicCompanyInfo
       description: |-
         Verify Basic Company Information
 
-        **API Code**: `KH.GOV.CAMDX-000012.TSC-EKYB-API.info`
+        **API Code**: `KH.GOV.CAMDX-000012.TSC-EKYB-API.company-info`
 
         **Version**: `1.0.0`
       parameters:
@@ -502,21 +572,53 @@ paths:
           $ref: '#/components/responses/error500'
         '502':
           $ref: '#/components/responses/error502'
+      x-internal: false
+      tags:
+        - e-KYB
     parameters:
-      - name: member_code
-        in: path
-        required: true
-        schema:
-          type: string
-          example: CAMDX-20201222
-          default: CAMDX-20201222
+      - $ref: '#/components/parameters/MemberCode'
+  '/r1/CAMBODIA/GOV/{member_code}/TSC-EKYB-API/tin':
+    post:
+      summary: Verify Company TIN
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request-Tin'
+            examples:
+              Example 1:
+                value:
+                  tin: '100012345'
+                  company_name_en: 'ABC Co., Ltd'
+                  company_name_kh: ក្រុមហ៊ុន អេប៊ីស៊ី
         description: |
-          E-KYB''s Member:
-          * **DEVELOPMENT**: `CAMDX-20201222`
-          * **PRODUCTION**: `CAMDX-000012`
+          Validate company names against GDT records using tin as the key with scoring rules:
+          1. If all submitted fields match official records → score: 1
+          2. If any field is incorrect → score: 0
+      operationId: verifyCompanyTin
+      description: |-
+        Verify Company TIN
+
+        **API Code**: `KH.GOV.CAMDX-000012.TSC-EKYB-API.tin`
+
+        **Version**: `1.0.0`
+      parameters:
+        - $ref: '#/components/parameters/XRoadClient'
+      responses:
+        '200':
+          $ref: '#/components/responses/tin'
+        '400':
+          $ref: '#/components/responses/error400'
+        '500':
+          $ref: '#/components/responses/error500'
+      x-internal: false
+      tags:
+        - e-KYB
+    parameters:
+      - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/TSC-EKYB-API/company-directors':
     post:
-      summary: Verify company directors
+      summary: Verify Company Directors
       responses:
         '200':
           $ref: '#/components/responses/companyDirectors'
@@ -543,29 +645,35 @@ paths:
             examples:
               example-1:
                 value:
-                  userInfo:
-                    idNumber: '011196245'
-                    firstNameKh: ការឌុល
-                    lastNameKh: អេង
-                    firstNameEn: KADOL
-                    lastNameEn: ENG
-                    gender: M
-                    dob: '2000-05-06'
-                    issuedDate: '2016-03-23'
-                    expiredDate: '2026-03-22'
-                  faceImage: base_64_content
+                  single_id: '1010015172'
+                  company_name_en: 'JAICODE CO., LTD.'
+                  company_name_kh: អង្គរ ថេក សូឡូសិន ឯ.ក
+                  directors:
+                    - identification_number: '122230000'
+                      last_name_kh: ឡាថ្មី
+                      first_name_kh: សា
+                      last_name_en: LAnew
+                      first_name_en: SA
+                      gender: M
+                      dob: '2004-06-14'
+                    - identification_number: '023445556'
+                      last_name_kh: សុពលបញ្ញា
+                      first_name_kh: ទាយ
+                      last_name_en: TEAY
+                      first_name_en: SOPULPANHA
+                      gender: F
+                      dob: '2001-03-03'
+                    - identification_number: '023445326'
+                      last_name_kh: សុពលបញ្ញា
+                      first_name_kh: ទាយ
+                      last_name_en: TEAY
+                      first_name_en: SOPULPANHA
+                      gender: F
+                      dob: '2001-03-03'
+      tags:
+        - e-KYB
     parameters:
-      - name: member_code
-        in: path
-        required: true
-        schema:
-          type: string
-          example: CAMDX-20201222
-          default: CAMDX-20201222
-        description: |
-          E-KYB''s Member:
-          * **DEVELOPMENT**: `CAMDX-20201222`
-          * **PRODUCTION**: `CAMDX-000012`
+      - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/TSC-EKYB-API/enterprise-opening-announcement':
     post:
       summary: Verify enterprise opening announcement
@@ -577,18 +685,19 @@ paths:
             examples:
               example-1:
                 value:
-                  userInfo:
-                    idNumber: '011196245'
-                    firstNameKh: ការឌុល
-                    lastNameKh: អេង
-                    firstNameEn: KADOL
-                    lastNameEn: ENG
-                    gender: M
-                    dob: '2000-05-06'
-                    issuedDate: '2016-03-23'
-                    expiredDate: '2026-03-22'
-                  faceImg: base_64_content
-                  idImage: base_64_content
+                  single_id: '6010019126'
+                  company_name_en: LARGE ENTERPRISE 004 GP
+                  company_name_kh: សហគ្រាសធុនមធ្យម០០៤ ស.ទ
+                  tin: K006-902400043
+                  opening_date: '2024-01-01'
+                  company_type: PRIVATE_LIMITED_COMPANY
+                  main_business_objective_en: Construction of buildings
+                  main_business_objective_kh: ការសាងសង់អាគារ
+                  main_business_objective_code: '410'
+                  number_of_employee: 8
+                  number_of_women_employee: 0
+                  number_of_foreigner_employee: 1
+                  number_of_women_foreigner_employee: 0
         description: ''
       responses:
         '200':
@@ -608,18 +717,10 @@ paths:
         **Version**: `1.0.0`
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
+      tags:
+        - e-KYB
     parameters:
-      - name: member_code
-        in: path
-        required: true
-        schema:
-          type: string
-          example: CAMDX-20201222
-          default: CAMDX-20201222
-        description: |
-          E-KYB''s Member:
-          * **DEVELOPMENT**: `CAMDX-20201222`
-          * **PRODUCTION**: `CAMDX-000012`
+      - $ref: '#/components/parameters/MemberCode'
   '/r1/CAMBODIA/GOV/{member_code}/TSC-EKYB-API/enterprise-opening-announcement-director':
     post:
       summary: Verify director of enterprise opening announcement
@@ -647,15 +748,10 @@ paths:
       operationId: verifyDirectorOfEnterpriseOpeningAnnouncement
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
+      tags:
+        - e-KYB
     parameters:
-      - name: member_code
-        in: path
-        required: true
-        schema:
-          type: string
-          example: CAMDX-20201222
-          default: CAMDX-20201222
-        description: |
-          E-KYB''s Member:
-          * **DEVELOPMENT**: `CAMDX-20201222`
-          * **PRODUCTION**: `CAMDX-000012`
+      - $ref: '#/components/parameters/MemberCode'
+x-internal: false
+tags:
+  - name: e-KYB
