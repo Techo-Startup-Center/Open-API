@@ -577,7 +577,7 @@ paths:
         - e-KYB
     parameters:
       - $ref: '#/components/parameters/MemberCode'
-  '/r1/CAMBODIA/GOV/{member_code}/TSC-EKYB-API/tin':
+  '/r1/CAMBODIA/GOV/{member_code}/TSC-EKYB-API/company-tin':
     post:
       summary: Verify Company TIN
       requestBody:
@@ -599,7 +599,7 @@ paths:
       description: |-
         Verify Company TIN
 
-        **API Code**: `KH.GOV.CAMDX-000012.TSC-EKYB-API.tin`
+        **API Code**: `KH.GOV.CAMDX-000012.TSC-EKYB-API.company-tin`
 
         **Version**: `1.0.0`
       parameters:
@@ -615,7 +615,17 @@ paths:
       tags:
         - e-KYB
     parameters:
-      - $ref: '#/components/parameters/MemberCode'
+      - name: member_code
+        in: path
+        schema:
+          type: string
+          example: CAMDX-20201222
+          default: none
+        description: |
+          E-KYB's Member:
+          * **DEVELOPMENT**: `CAMDX-20201222`
+          * **PRODUCTION**: `CAMDX-000012`
+        required: true
   '/r1/CAMBODIA/GOV/{member_code}/TSC-EKYB-API/company-directors':
     post:
       summary: Verify Company Directors
