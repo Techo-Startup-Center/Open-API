@@ -60,7 +60,6 @@ components:
                 code: 0
                 message: Successfully
                 data:
-                  id_number: '012345678'
                   score: 1
                   incorrect_fields:
                     - incorrect_field_name
