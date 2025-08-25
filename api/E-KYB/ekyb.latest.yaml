@@ -60,10 +60,10 @@ components:
                 code: 0
                 message: Successfully
                 data:
-                  idNumber: '012345678'
+                  id_number: '012345678'
                   score: 1
-                  incorrectFields:
-                    - incorrectFieldName
+                  incorrect_fields:
+                    - incorrect_field_name
         application/xml:
           schema:
             type: object
@@ -143,26 +143,9 @@ components:
           schema:
             allOf:
               - $ref: '#/components/schemas/Response-Base'
-              - type: object
+              - $ref: '#/components/schemas/Response-CompanyDirector'
                 x-stoplight:
-                  id: uvx5be1d4dwxe
-                properties:
-                  company:
-                    $ref: '#/components/schemas/Response-ScoringResult'
-                    x-stoplight:
-                      id: 6ev28y3sbzpr4
-              - type: object
-                x-stoplight:
-                  id: bmr4gkxir5apm
-                properties:
-                  directors:
-                    x-stoplight:
-                      id: 2jzpo6rl56r0i
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Response-Director'
-                      x-stoplight:
-                        id: 3aa860yip2n1y
+                  id: 87bhpduv89248
     enterprise:
       description: Successful Response
       content:
@@ -482,11 +465,13 @@ components:
         score:
           type: integer
           description: '#Range [0,1]'
-        incorrectFields:
+        incorrect_fields:
           type: array
           description: Requested Fields or Empty
           items:
             type: string
+            x-stoplight:
+              id: z4hn01eivl4yh
     Response-Director:
       title: DirectorResponse
       x-stoplight:
@@ -508,7 +493,7 @@ components:
           x-stoplight:
             id: 150cg0jr85tkn
           description: 'Director info’s score range [0,1]'
-        incorrectFields:
+        incorrect_fields:
           type: array
           x-stoplight:
             id: 4qyjs1k3p99r9
@@ -517,6 +502,42 @@ components:
             x-stoplight:
               id: jydvp1os1a188
             type: string
+    Response-CompanyDirector:
+      title: DirectorResponse
+      x-stoplight:
+        id: njldck0e5kemd
+      type: object
+      properties:
+        data:
+          type: object
+          x-stoplight:
+            id: layd9b2i68ye2
+          properties:
+            company:
+              type: object
+              x-stoplight:
+                id: ha5ex957sjsw4
+              properties:
+                score:
+                  type: number
+                  x-stoplight:
+                    id: vlh6ujyb20ram
+                incorrect_fields:
+                  type: array
+                  x-stoplight:
+                    id: j4lqpnq34ty0d
+                  items:
+                    x-stoplight:
+                      id: cvw3oziyn60ji
+                    type: string
+            directors:
+              x-stoplight:
+                id: jhbd0is8pkeqf
+              type: array
+              items:
+                $ref: '#/components/schemas/Response-Director'
+                x-stoplight:
+                  id: o28n4wkdrljpd
     Response-Tin:
       title: TinResponse
       x-stoplight:
