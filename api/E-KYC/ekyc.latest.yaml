@@ -17,10 +17,10 @@ info:
 
     **Request Based URL:**
     ```
-    http(s)://{CONSUMER_SS_MEMBER_URL}/r1/CAMBODIA/GOV/{CAMDIGIKEY_MEMBER_CODE}/CAMDIGIKEY_KYC
+    http(s)://{CONSUMER_SS_MEMBER_URL}/r1/CAMBODIA/GOV/{PROVIDER_MEMBER_CODE}/{PROVIDER_SUBSYSTEM_CODE}
     ```
     - `http(s)://{CONSUMER_SS_MEMBER_URL}/r1/` The base URL of the consumer's security server.
-    - `CAMBODIA/GOV/{CAMDIGIKEY_MEMBER_CODE}/CAMDIGIKEY_KYC` Path containing the provider's API details, including the member code, and specific service.
+    - `CAMBODIA/GOV/{PROVIDER_MEMBER_CODE}/{PROVIDER_SUBSYSTEM_CODE}` Path containing the provider's API details, including the member code, and specific service.
 
     **Request Header:**
     ```
@@ -28,11 +28,13 @@ info:
     ```
     - `X-Road-Client` The identifier of the consumer, which is recognized and authorized by the provider.
 
+
+    ### 2.1. Verification API (Level 1, 2, 3 and 4)
     #
-    | Environment | CAMDIGIKEY_MEMBER_CODE |
-    | ----------- | ---------------------- |
-    | **DEVELOPMENT**| CAMDX-20201222 |
-    | **PRODUCTION** | CAMDX-000003 |
+    | Environment | PROVIDER_MEMBER_CODE | PROVIDER_SUBSYSTEM_CODE |
+    | ----------- | ---------------------- | --------------------- |
+    | **DEVELOPMENT**| CAMDX-20201222 | CAMDIGIKEY_KYC |
+    | **PRODUCTION** | CAMDX-000003 | CAMDIGIKEY_KYC |
 
     #### Example:
 
@@ -45,11 +47,12 @@ info:
     http(s)://[ss.consumer1.com.kh]/r1/CAMBODIA/GOV/CAMDX-000003/CAMDIGIKEY_KYC
     ```
 
+    ### 2.2. TSC AI API
     #
-    | Environment | TSC_MEMBER_CODE |
-    | ----------- | ---------------------- |
-    | **DEVELOPMENT**| CAMDX-20201222 |
-    | **PRODUCTION** | CAMDX-000012 |
+    | Environment | PROVIDER_MEMBER_CODE |  PROVIDER_SUBSYSTEM_CODE |
+    | ----------- | ---------------------- | --------------------- |
+    | **DEVELOPMENT**| CAMDX-20201222 | TSC-AI-API |
+    | **PRODUCTION** | CAMDX-000012 | TSC-AI-API |
 
     #### Example:
 
