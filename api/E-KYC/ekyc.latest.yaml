@@ -34,16 +34,32 @@ info:
     | **DEVELOPMENT**| CAMDX-20201222 |
     | **PRODUCTION** | CAMDX-000003 |
 
-
     #### Example:
 
-    DEVELOPMENT: 
+    DEVELOPMENT: Verification API (Level 1, 2, 3 and 4)
     ```
     http(s)://[ss-dev.consumer1.com.kh]/r1/CAMBODIA/GOV/CAMDX-20201222/CAMDIGIKEY_KYC 
     ```
-    PRODUCTION: 
+    PRODUCTION: Verification API (Level 1, 2, 3 and 4)
     ```
     http(s)://[ss.consumer1.com.kh]/r1/CAMBODIA/GOV/CAMDX-000003/CAMDIGIKEY_KYC
+    ```
+
+    #
+    | Environment | TSC_MEMBER_CODE |
+    | ----------- | ---------------------- |
+    | **DEVELOPMENT**| CAMDX-20201222 |
+    | **PRODUCTION** | CAMDX-000012 |
+
+    #### Example:
+
+    DEVELOPMENT: TSC AI API
+    ```
+    http(s)://[ss-dev.consumer1.com.kh]/r1/CAMBODIA/GOV/CAMDX-20201222/CAMDIGIKEY_KYC 
+    ```
+    PRODUCTION: TSC AI API
+    ```
+    http(s)://[ss.consumer1.com.kh]/r1/CAMBODIA/GOV/CAMDX-000012/TSC-AI-API
     ```
 
     ## 3. API ERROR CODES
@@ -777,7 +793,7 @@ paths:
         - $ref: '#/components/parameters/XRoadClient'
     parameters:
       - $ref: '#/components/parameters/MemberCode'
-  '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/ocr-idcard-v2.1':
+  '/r1/CAMBODIA/GOV/{member_code}/TSC-AI-API/ocr-idcard-v2.1':
     post:
       summary: Khmer ID Card OCR
       requestBody:
@@ -809,14 +825,24 @@ paths:
       description: |-
         OCR extracts user's information from submitted identification image
 
-        **API Code**: `KH.GOV.CAMDX-000003.CAMDIGIKEY_KYC.ocr-idcard`
+        **API Code**: `KH.GOV.CAMDX-000012.TSC-AI-API.ocr-idcard`
 
         **Version**: `2.1.0`
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
     parameters:
-      - $ref: '#/components/parameters/MemberCode'
-  '/r1/CAMBODIA/GOV/{member_code}/CAMDIGIKEY_KYC/ocr-passport-v2.1':
+      - name: member_code
+        in: path
+        required: true
+        schema:
+          type: string
+          example: CAMDX-20201222
+          default: CAMDX-20201222
+        description: |
+          CamDigiKey's Member:
+          * **DEVELOPMENT**: `CAMDX-20201222`
+          * **PRODUCTION**: `CAMDX-000003`
+  /r1/CAMBODIA/GOV/TSC-AI-API/ocr-passport-v2.1:
     post:
       summary: Passport OCR
       requestBody:
@@ -850,20 +876,9 @@ paths:
       description: |-
         OCR extracts user's information from submitted passport image
 
-        **API Code**: `KH.GOV.CAMDX-000003.CAMDIGIKEY_KYC.ocr-passport`
+        **API Code**: `KH.GOV.CAMDX-000012.TSC-AI-API.ocr-passport`
 
         **Version**: `2.1.0`
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
-    parameters:
-      - name: member_code
-        in: path
-        required: true
-        schema:
-          type: string
-          example: CAMDX-20201222
-          default: CAMDX-20201222
-        description: |
-          CamDigiKey's Member:
-          * **DEVELOPMENT**: `CAMDX-20201222`
-          * **PRODUCTION**: `CAMDX-000003`
+    parameters: []
