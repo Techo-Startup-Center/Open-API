@@ -100,9 +100,7 @@ components:
       schema:
         type: string
         example: CAMBODIA/GOV/CAMDX-20201234/SUBSYTEM_CODE
-      description: |
-        X-Road-Client Request Header 
-        * Example: `CAMBODIA/GOV/CAMDX-20201234/SUBSYTEM_CODE`
+      description: 'X-Road-Client Request Header * Example: `CAMBODIA/GOV/CAMDX-20201234/SUBSYTEM_CODE`'
     MemberCode:
       name: member_code
       in: path
@@ -844,8 +842,8 @@ paths:
         description: |
           CamDigiKey's Member:
           * **DEVELOPMENT**: `CAMDX-20201222`
-          * **PRODUCTION**: `CAMDX-000003`
-  /r1/CAMBODIA/GOV/TSC-AI-API/ocr-passport-v2.1:
+          * **PRODUCTION**: `CAMDX-000012`
+  '/r1/CAMBODIA/GOV/{member_code}/TSC-AI-API/ocr-passport-v2.1':
     post:
       summary: Passport OCR
       requestBody:
@@ -884,4 +882,15 @@ paths:
         **Version**: `2.1.0`
       parameters:
         - $ref: '#/components/parameters/XRoadClient'
-    parameters: []
+    parameters:
+      - name: member_code
+        in: path
+        required: true
+        schema:
+          type: string
+          example: CAMDX-20201222
+          default: CAMDX-20201222
+        description: |
+          CamDigiKey's Member:
+          * **DEVELOPMENT**: `CAMDX-20201222`
+          * **PRODUCTION**: `CAMDX-000012`
