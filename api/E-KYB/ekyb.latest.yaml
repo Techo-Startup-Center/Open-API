@@ -299,6 +299,8 @@ components:
             $ref: '#/components/schemas/Request-Director'
             x-stoplight:
               id: mnalel923iqlj
+      required:
+        - single_id
     Request-Enterprise:
       title: EnterpriseRequest
       x-stoplight:
@@ -448,7 +450,7 @@ components:
           description: |-
             0: Successfully;
             400: Not found;
-            500: Invalid access token
+            500: Internal Server Error
         message:
           type: string
       required:
@@ -550,7 +552,7 @@ components:
           description: |-
             0: Successfully;
             400: Not found;
-            500: Invalid access token
+            500: Internal Server Error
         message:
           type: string
           x-stoplight:
