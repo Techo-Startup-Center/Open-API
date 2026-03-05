@@ -58,7 +58,7 @@ info:
 
     DEVELOPMENT: TSC AI API
     ```
-    http(s)://[ss-dev.consumer1.com.kh]/r1/CAMBODIA/GOV/CAMDX-20201222/CAMDIGIKEY_KYC 
+    http(s)://[ss-dev.consumer1.com.kh]/r1/CAMBODIA/GOV/CAMDX-20201222/TSC-AI-API
     ```
     PRODUCTION: TSC AI API
     ```
