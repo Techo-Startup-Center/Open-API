@@ -394,16 +394,6 @@ components:
           x-stoplight:
             id: ajac1jfy4l4ck
           description: Company’s TIN
-        company_name_en:
-          type: string
-          x-stoplight:
-            id: 8ndanhzpe3cn4
-          description: Company’s name in English
-        company_name_kh:
-          type: string
-          x-stoplight:
-            id: 1le51fl8c8qid
-          description: 'Company’s name in Khmer '
         director_last_name_kh:
           type: string
           x-stoplight:
