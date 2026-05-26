@@ -600,9 +600,9 @@ paths:
             examples:
               Example 1:
                 value:
-                  tin: '100012345'
-                  company_name_en: 'ABC Co., Ltd'
-                  company_name_kh: ក្រុមហ៊ុន អេប៊ីស៊ី
+                  tin: 'K008-902300031'
+                  company_name_en: 'JAICODE CO., LTD.'
+                  company_name_kh: ចៃកូដ ឯ.ក
         description: |
           Validate company names against GDT records using tin as the key with scoring rules:
           1. If all submitted fields match official records → score: 1
